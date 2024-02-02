@@ -1,18 +1,52 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import {
+  DocumentBuilder,
+  SwaggerCustomOptions,
+  SwaggerModule,
+} from '@nestjs/swagger';
+import helmet from 'helmet';
 import { AppModule } from './app.module';
+import { ConfigService } from './config/config.service';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const configService = new ConfigService();
+  const app = await NestFactory.create(AppModule, { cors: true });
+  const port = configService.getAppPort || undefined;
 
-  const config = new DocumentBuilder();
-  config.setTitle('API');
-  config.setDescription('API description');
-  config.setVersion('1.0');
-  config.addTag('API');
-  const document = SwaggerModule.createDocument(app, config.build());
-  SwaggerModule.setup('api', app, document);
+  app.use(helmet());
+  app.enableCors();
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
 
-  await app.listen(3000);
+  // setup swagger (only in production)
+  const config = new DocumentBuilder()
+    .setTitle('XFut API')
+    .setDescription('XFut API implementation')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  const customOptions: SwaggerCustomOptions = {
+    customSiteTitle: 'XFut API',
+    swaggerOptions: {
+      docExpansion: 'none',
+      operationsSorter: 'alpha',
+      persistAuthorization: true,
+      tagsSorter: 'alpha',
+    },
+  };
+
+  SwaggerModule.setup('api/v1/doc', app, document, customOptions);
+  await app.listen(port);
+
+  console.log(`Application is running on ${await app.getUrl()}`);
+  console.log(`API docs on ${await app.getUrl()}/api/v1/doc`);
 }
+
 bootstrap();
