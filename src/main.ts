@@ -24,20 +24,20 @@ async function bootstrap() {
     }),
   );
 
-  // setup swagger (only in production)
+
   const config = new DocumentBuilder()
-    .setTitle('XFut API')
-    .setDescription('XFut API implementation')
+    .setTitle('Notes')
+    .setDescription('Notes implementation')
     .setVersion('1.0')
-    .addBearerAuth()
+    .addTag('notes')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   const customOptions: SwaggerCustomOptions = {
-    customSiteTitle: 'XFut API',
+    customSiteTitle: 'Notes API Documentation',
     swaggerOptions: {
       docExpansion: 'none',
       operationsSorter: 'alpha',
-      persistAuthorization: true,
+      persistAuthorization: false,
       tagsSorter: 'alpha',
     },
   };
