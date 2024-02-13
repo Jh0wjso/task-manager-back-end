@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
 import { NotesService } from '../services/notes.service';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateNoteDto } from '../dtos/create-note.dto';
+import { UpdateNoteDto } from '../dtos/update-note.dto';
 
 @Controller('Notes')
 @ApiTags('Notes')
@@ -24,7 +25,7 @@ export class NotesController {
   }
 
   @Patch(':id')
-  async update(@Body() updateNoteDto: CreateNoteDto, id: string) {
+  async update(@Body() updateNoteDto: UpdateNoteDto, id: string) {
     return this.notesService.update(id, updateNoteDto);
   }
 
