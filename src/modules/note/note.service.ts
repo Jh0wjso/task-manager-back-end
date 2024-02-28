@@ -13,6 +13,7 @@ export class NoteService {
       data: {
         title: createNoteDto.title,
         content: createNoteDto.content,
+        isfavorite: createNoteDto.isfavorite,
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -44,6 +45,7 @@ export class NoteService {
       data: {
         title: updateNoteDto.title,
         content: updateNoteDto.content,
+        isfavorite: updateNoteDto.isfavorite,
         updatedAt: new Date()
       }
     });
