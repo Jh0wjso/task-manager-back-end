@@ -16,11 +16,10 @@ export class NoteService {
         isfavorite: createNoteDto.isfavorite,
         createdAt: new Date(),
         updatedAt: new Date(),
+        userId: createNoteDto.userId
       }
     });
-
     return note;
-
   }
 
   async findAll() {
@@ -31,7 +30,7 @@ export class NoteService {
   findOne(id: number) {
     const note = this.prismaService.notes.findUnique({
       where: {
-        id: id
+        noteId: id
       }
     });
     return note;
@@ -40,13 +39,14 @@ export class NoteService {
   update(id: number, updateNoteDto: UpdateNoteDto) {
     const note = this.prismaService.notes.update({
       where: {
-        id: id
+        noteId: id
       },
       data: {
         title: updateNoteDto.title,
         content: updateNoteDto.content,
         isfavorite: updateNoteDto.isfavorite,
         updatedAt: new Date(),
+        userId: updateNoteDto.userId
       }
     });
     return note;
@@ -55,7 +55,7 @@ export class NoteService {
   remove(id: number) {
     const note = this.prismaService.notes.delete({
       where: {
-        id: id
+        noteId: id
       }
     });
     return note;  

@@ -1,7 +1,8 @@
 export class CreateNoteDto {
   title: string;
   content: string;
-  isfavorite?: boolean;
+  isfavorite: boolean;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  userId: number;
 }
