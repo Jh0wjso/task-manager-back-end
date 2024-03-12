@@ -11,15 +11,19 @@ datasource db {
 }
 
 
-// model User {
-//   userId       Int      @id @default(autoincrement())
-//   email    String   @unique
-//   password String
-//   name     String
-//   //notes    Notes[]
-// }
+model User {
+  userId    Int     @map("userId") @default(autoincrement()) @id
+  email    String   @unique
+  password String
+  name     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
 
 
+//• Step 1 Added the required column `noteId` to the `notes` table without a default value. There are 5 rows in this table, it is not possible to execute this step.
 model Notes {
   noteId        Int      @id @default(autoincrement())
   title     String
@@ -27,7 +31,7 @@ model Notes {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   isfavorite Boolean @default(false)
+  userId    Int     @map("userId")
 
   @@map("notes")
-  //user      User @relation(fields: [noteId], references: [userId])
 }
