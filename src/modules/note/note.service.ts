@@ -27,7 +27,7 @@ export class NoteService {
     return notes;
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     const note = this.prismaService.notes.findUnique({
       where: {
         id: id
@@ -36,7 +36,9 @@ export class NoteService {
     return note;
   }
 
-  update(id: number, updateNoteDto: UpdateNoteDto) {
+  
+
+  async update(id: number, updateNoteDto: UpdateNoteDto) {
     const note = this.prismaService.notes.update({
       where: {
         id: id
@@ -52,7 +54,7 @@ export class NoteService {
     return note;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     const note = this.prismaService.notes.delete({
       where: {
         id: id
