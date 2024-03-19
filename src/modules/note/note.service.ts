@@ -5,7 +5,6 @@ import { PrismaService } from 'src/common/prisma/prisma.service';
 
 @Injectable()
 export class NoteService {
-
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(createNoteDto: CreateNoteDto) {
@@ -16,8 +15,8 @@ export class NoteService {
         isfavorite: createNoteDto.isfavorite,
         createdAt: new Date(),
         updatedAt: new Date(),
-        userId: createNoteDto.userId
-      }
+        userId: createNoteDto.userId,
+      },
     });
     return note;
   }
@@ -30,26 +29,35 @@ export class NoteService {
   async findOne(id: number) {
     const note = this.prismaService.notes.findUnique({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
     return note;
   }
 
-  
+  async findByTitle(title: string) {
+    const note = this.prismaService.notes.findMany({
+      where: {
+        title: {
+          contains: title,
+        },
+      },
+    });
+    return note;
+  }
 
   async update(id: number, updateNoteDto: UpdateNoteDto) {
     const note = this.prismaService.notes.update({
       where: {
-        id: id
+        id: id,
       },
       data: {
         title: updateNoteDto.title,
         content: updateNoteDto.content,
         isfavorite: updateNoteDto.isfavorite,
         updatedAt: new Date(),
-        userId: updateNoteDto.userId
-      }
+        userId: updateNoteDto.userId,
+      },
     });
     return note;
   }
@@ -57,9 +65,9 @@ export class NoteService {
   async remove(id: number) {
     const note = this.prismaService.notes.delete({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
-    return note;  
+    return note;
   }
 }

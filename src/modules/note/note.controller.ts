@@ -22,6 +22,11 @@ export class NoteController {
     return this.noteService.findOne(+id);
   }
 
+  @Get('search/:title')
+  findByTitle(@Param('title') title: string) {
+    return this.noteService.findByTitle(title);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateNoteDto: UpdateNoteDto) {
     return this.noteService.update(+id, updateNoteDto);
