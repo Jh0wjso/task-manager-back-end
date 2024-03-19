@@ -30,7 +30,7 @@ export class NoteService {
   findOne(id: number) {
     const note = this.prismaService.notes.findUnique({
       where: {
-        noteId: id
+        id: id
       }
     });
     return note;
@@ -39,7 +39,7 @@ export class NoteService {
   update(id: number, updateNoteDto: UpdateNoteDto) {
     const note = this.prismaService.notes.update({
       where: {
-        noteId: id
+        id: id
       },
       data: {
         title: updateNoteDto.title,
@@ -55,7 +55,7 @@ export class NoteService {
   remove(id: number) {
     const note = this.prismaService.notes.delete({
       where: {
-        noteId: id
+        id: id
       }
     });
     return note;  

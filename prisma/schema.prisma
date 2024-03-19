@@ -25,7 +25,7 @@ model User {
 
 //• Step 1 Added the required column `noteId` to the `notes` table without a default value. There are 5 rows in this table, it is not possible to execute this step.
 model Notes {
-  noteId        Int      @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   title     String
   content   String
   createdAt DateTime @default(now())
