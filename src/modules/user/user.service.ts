@@ -8,21 +8,6 @@ export class UserService {
 
   constructor(private readonly prismaService: PrismaService) {}
 
-  /*
-
-      model User {
-      userId    Int     @map("userId") @default(autoincrement()) @id
-      email    String   @unique
-      password String
-      name     String
-      createdAt DateTime @default(now())
-      updatedAt DateTime @updatedAt
-      notes    Notes[]
-
-      @@map("users")
-    }
-  */
-
   async create(createUserDto: CreateUserDto) {
     const user = this.prismaService.user.create({
       data: {
@@ -47,6 +32,15 @@ export class UserService {
       where: {
         userId: id
       }
+    });
+    return user;
+  }
+
+  findByName(name: string) {
+    const user = this.prismaService.user.findUnique({
+      where: {
+        name: name
+      } as any
     });
     return user;
   }

@@ -32,6 +32,11 @@ export class UserController {
     return this.userService.validateUser(email, password);
   }
 
+  @Get('findByName/:name')
+  findByName(name: string) {
+    return this.userService.findByName(name);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);
