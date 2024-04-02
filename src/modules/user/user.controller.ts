@@ -27,8 +27,14 @@ export class UserController {
     return this.userService.findByEmail(email);
   }
 
+  /*
   @Get('validateUser/:email/:password')
   validateUser(email: string, password: string) {
+    return this.userService.validateUser(email, password);
+  }*/
+
+  @Get('validateUser/:email/:password')
+  validateUser(@Param('email') email: string, @Param('password') password: string) {
     return this.userService.validateUser(email, password);
   }
 

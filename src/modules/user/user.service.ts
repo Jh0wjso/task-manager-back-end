@@ -55,7 +55,7 @@ export class UserService {
   }
 
   validateUser(email: string, password: string) {
-    const user = this.prismaService.user.findFirst({
+    const user = this.prismaService.user.findUnique({
       where: {
         email: email,
         password: password
