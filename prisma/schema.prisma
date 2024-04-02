@@ -35,3 +35,13 @@ model Notes {
 
   @@map("notes")
 }
+
+model AuthModule {
+  id        Int      @id @default(autoincrement())
+  userId    Int     @map("userId")
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("authModules")
+}
