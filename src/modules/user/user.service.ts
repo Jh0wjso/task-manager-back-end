@@ -54,14 +54,13 @@ export class UserService {
     return user;
   }
 
-  validateUser(email: string, password: string) {
-    const user = this.prismaService.user.findUnique({
-      where: {
-        email: email,
-        password: password
-      }
-    });
-    return user;
+  async validateUser(email: string, password: string) {
+    const user = this.findByEmail(email);
+    if (user && (await user).password === password) {
+      return {statusCode: 200, message: 'Login success'};
+    }
+
+    return {statusCode: 404, message: 'Invalid email or password'};
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
