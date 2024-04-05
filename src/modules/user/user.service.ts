@@ -57,7 +57,7 @@ export class UserService {
   async validateUser(email: string, password: string) {
     const user = this.findByEmail(email);
     if (user && (await user).password === password) {
-      return {statusCode: 200, message: 'Login success'};
+      return {statusCode: 200, message: 'Login success', user: await user};
     }
 
     return {statusCode: 404, message: 'Invalid email or password'};
