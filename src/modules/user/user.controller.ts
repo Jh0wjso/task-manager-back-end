@@ -38,6 +38,12 @@ export class UserController {
     return this.userService.validateUser(email, password);
   }
 
+  // Retornar todas as notes por usuário
+  @Get('userNotes/:userId')
+  userNotes(@Param('userId') userId: string) {
+    return this.userService.getNotesByUser(userId);
+  }
+
   @Get('findByName/:name')
   findByName(name: string) {
     return this.userService.findByName(name);

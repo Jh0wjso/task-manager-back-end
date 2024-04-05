@@ -63,6 +63,16 @@ export class UserService {
     return {statusCode: 404, message: 'Invalid email or password'};
   }
 
+  
+  getNotesByUser(userId: string) {
+    const notes = this.prismaService.notes.findMany({
+      where: {
+        userId: parseInt(userId) // Convert userId to a number
+      }
+    });
+    return notes;
+  }
+
   update(id: number, updateUserDto: UpdateUserDto) {
     const user = this.prismaService.user.update({
       where: {
